@@ -1,6 +1,7 @@
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+from visual import plotBogota
 
 def build_matrices(data):
     stations = data['stations']
@@ -122,31 +123,6 @@ def select_top_stops(best_path, rewards, start_idx, end_idx, top_n=4):
     top = orden[:top_n]
     return [start_idx] + top + [end_idx]
 
-def plot_graph(data, best_route, highlight_idxs=None):
-    G = build_graph(data)
-    pos = nx.spring_layout(G, seed=42)
-    pops = np.array([data['populations'][s] for s in data['stations']])
-    sizes = 300 + (pops - pops.min())/(pops.max()-pops.min())*700
-    
-    plt.figure(figsize=(10,8))
-    nx.draw_networkx_nodes(G, pos, node_size=sizes)
-    nx.draw_networkx_labels(G, pos, font_size=10)
-    nx.draw_networkx_edges(G, pos, alpha=0.4)
-    nx.draw_networkx_edge_labels(G, pos,
-        edge_labels=nx.get_edge_attributes(G,'weight'), font_size=8)
-    
-    # ruta completa en rojo
-    if best_route:
-        edges = list(zip(best_route, best_route[1:]))
-        nx.draw_networkx_edges(G, pos, edgelist=edges, width=3, edge_color='r')
-    # nodos destacados en verde
-    if highlight_idxs:
-        labels = [data['stations'][i] for i in highlight_idxs]
-        nx.draw_networkx_nodes(G, pos,
-            nodelist=labels, node_color='green',
-            node_size=500, alpha=0.9)
-    plt.axis('off')
-    plt.show()
 
 if __name__ == '__main__':
     example_data = {
@@ -656,14 +632,8 @@ if __name__ == '__main__':
     )
     
     best_route = [idx_to_station[i] for i in best_path]
-    # print(f"Ruta (termina en L): {' → '.join(best_route)}")
-    print(best_route)
-    print("-"*10)
-    # print(f"Eficiencia: {best_eff:.2f}")
     
     highlight = select_top_stops(best_path, rewards, start_idx, end_idx, top_n=4)
     labels = [idx_to_station[i] for i in highlight]
-    # print(f"Nodos destacados: {labels}")
-    print(labels)
-    
-    # plot_graph(example_data, best_route, highlight)
+
+    plotBogota(best_route, labels)

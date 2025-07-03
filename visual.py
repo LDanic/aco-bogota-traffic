@@ -265,14 +265,16 @@ def plot_map_with_route_and_highlight(lines_gs, stations_gdf,
         highlight=highlight_dict
     )
 
-if __name__ == "__main__":
+def plotBogota(mi_ruta, highlight):
     print("Cargando datos GIS de TransMilenio...")
     lines = fetch_troncal()
     stations = fetch_estaciones()
 
+    print("Dibujando ruta y resaltando estaciones...")
+    plot_map_with_route_and_highlight(lines, stations, mi_ruta, highlight)
+
+if __name__ == "__main__":
     mi_ruta = ['La Despensa', 'Bosa', 'Portal Sur - JFK Coop. Financiera', 'Perdomo', 'CC Paseo Villa del Río - Madelena', 'Sevillana', 'Venecia', 'Alquería', 'General Santander', 'NQS - Calle 38A S', 'NQS - Calle 30 S', 'Santa Isabel', 'Comuneros', 'Guatoque - Veraguas', 'Tygua - San Jose', 'Tercer Milenio', 'AV. Jiménez - Caracas', 'Calle 19', 'Calle 22', 'Calle 26', 'Calle 34 – Fondo Nacional de Garantías', 'AV. 39', 'Calle 45 - American School Way']
 
     highlight = ['La Despensa', 'AV. Jiménez - Caracas', 'Venecia', 'Bosa', 'NQS - Calle 38A S', 'Calle 45 - American School Way']
-
-    print("Dibujando ruta y resaltando estaciones...")
-    plot_map_with_route_and_highlight(lines, stations, mi_ruta, highlight)
+    plotBogota(mi_ruta, highlight)
