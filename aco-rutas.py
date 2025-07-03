@@ -644,7 +644,7 @@ if __name__ == '__main__':
     
     start_idx = station_to_idx['La Despensa']
     end_idx   = station_to_idx['Calle 45 - American School Way']
-    budget    = 20000000
+    budget    = 20000
     n_ants    = 30
     n_iter    = 100
     
@@ -656,11 +656,14 @@ if __name__ == '__main__':
     )
     
     best_route = [idx_to_station[i] for i in best_path]
-    print(f"Ruta (termina en L): {' → '.join(best_route)}")
-    print(f"Eficiencia: {best_eff:.2f}")
+    # print(f"Ruta (termina en L): {' → '.join(best_route)}")
+    print(best_route)
+    print("-"*10)
+    # print(f"Eficiencia: {best_eff:.2f}")
     
     highlight = select_top_stops(best_path, rewards, start_idx, end_idx, top_n=4)
     labels = [idx_to_station[i] for i in highlight]
-    print(f"Nodos destacados: {labels}")
+    # print(f"Nodos destacados: {labels}")
+    print(labels)
     
-    plot_graph(example_data, best_route, highlight)
+    # plot_graph(example_data, best_route, highlight)
