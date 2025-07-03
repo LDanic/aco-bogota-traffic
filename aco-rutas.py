@@ -2,6 +2,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from visual import plotBogota
+from numerical_results import numerical_results
 
 def build_matrices(data):
     stations = data['stations']
@@ -635,5 +636,7 @@ if __name__ == '__main__':
     
     highlight = select_top_stops(best_path, rewards, start_idx, end_idx, top_n=4)
     labels = [idx_to_station[i] for i in highlight]
+
+    numerical_results(best_route, labels, example_data['edges'], example_data['populations'])
 
     plotBogota(best_route, labels)
